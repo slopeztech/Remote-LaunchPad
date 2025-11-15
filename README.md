@@ -1,4 +1,4 @@
-# LaunchPad Remote Controller
+# Remote LaunchPad Controller
 
 This repository contains firmware for an ESP8266-based LaunchPad remote controller. It creates a Wi‑Fi access point (soft AP) and serves an HTTPS API that provides basic status endpoints and actions like a countdown-triggered relay activation.
 
