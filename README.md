@@ -65,6 +65,40 @@ Important:
 
 ---
 
+## Generate a local certificate
+
+Before building, generate a local TLS certificate and create `src/certs.cpp` containing the certificate and private key in PEM format. Example (PowerShell / OpenSSL):
+
+```powershell
+# Generate private key
+openssl genrsa -out server.key 2048
+
+# Generate self-signed certificate (valid 10 years)
+openssl req -new -x509 -key server.key -out server.crt -days 3650 -subj "/CN=RemoteLaunchPad"
+```
+
+After creating `server.key` and `server.crt`, create `src/certs.cpp` and paste the PEM contents (replace with your actual files). Example `src/certs.cpp`:
+
+```cpp
+#include "certs.h"
+
+const char serverCert[] PROGMEM = R"EOF(
+-----BEGIN CERTIFICATE-----
+...your certificate PEM contents...
+-----END CERTIFICATE-----
+)EOF";
+
+const char serverKey[] PROGMEM = R"EOF(
+-----BEGIN RSA PRIVATE KEY-----
+...your private key PEM contents...
+-----END RSA PRIVATE KEY-----
+)EOF";
+```
+
+Keep `server.crt` and `server.key` secure. This approach is intended for local development only — do NOT publish real private keys in public repositories or use them in production.
+
+---
+
 ## Build and Upload (VS Code + PlatformIO)
 
 Prerequisites:
